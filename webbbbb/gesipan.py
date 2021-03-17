@@ -75,14 +75,14 @@ def show()->'html':
 @app.route('/delete/',methods=['POST'])
 def delete()->'html':
         
-        d_t=request.form["title"]
-        d_id=request.form["id"]
+        c_t=request.form["ctx"]
+        c_id=request.form["cid"]
        
-        SQL="DELETE FROM guestbook_t WHERE c_writer=%s AND c_title=%s "
-        cursor.execute(SQL,(d_id,d_t))
+        SQL="DELETE FROM guestbook_t WHERE c_body=%s AND c_id=%s "
+        cursor.execute(SQL,(c_t,c_id))
         conn.commit()    
         print("delete success")
-        return render_template("delete.html",t=d_t,id=d_id)
+        return render_template("delete.html",t=c_t,id=c_id)
 
 @app.route('/g_write/')
 def write()->'html':

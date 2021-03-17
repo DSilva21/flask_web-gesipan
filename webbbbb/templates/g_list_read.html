@@ -3,5 +3,12 @@
         <p>글 내용 페이지</p>
         <p>글 id:{{n}}</p>
         <p>글내용:{{data}}</p>
+
+        <form method='POST' action='/delete/'>
+            <input type="hidden" name="ctx" value={{data}}>
+            <input type="hidden" name="cid" value={{n}}>
+            <input type="submit" value="삭제">
+        
+        </form>
     </body>
 </html>
