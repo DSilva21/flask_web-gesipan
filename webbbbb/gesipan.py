@@ -25,6 +25,17 @@ def home()->'html':
     data=cursor.fetchall()
     return render_template("index.html",data=data)
 
+@app.route('/g_list_read/',methods=["GET"])
+def g_list_read_con()->"html":
+    no=request.args.get('no')
+    SQL="SELECT*FROM guestbook_t WHERE c_id=%s"
+    cursor.execute(SQL,(no,))
+    data=cursor.fetchall()
+    print(data)
+    ctx=data[0][2]
+    return render_template("g_list_read.html",n=no,data=ctx)
+
+
 @app.route('/login/')
 def gesipan_login()->'html':
     return render_template("login.html")
