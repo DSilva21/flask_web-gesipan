@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <p> <h1>내용표시 페이지</h1></p>
+        <p>제목: {{t}}</p>
+        <p>내용: {{ctx}}</p>
+        <p>id:{{id}}</p>
+        <form method='POST' action='/delete/'>
+            <input type="hidden" name="title" value={{t}}>
+            <input type="hidden" name="id" value={{id}}>
+            <input type="submit" value="삭제">
+        
+        </form>
+    </body>
+</html>

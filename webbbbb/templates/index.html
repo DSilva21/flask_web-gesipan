@@ -17,6 +17,7 @@
         }
         </style>
     <body>
+      <!--
         <table>
             <tr>
               <th>id</th>
@@ -30,16 +31,51 @@
               {% for row in data %}
               <tr>
                   {% for elem in row%}       
-                  <td>{{elem}} </td> 
+                  <td>{{elem}}</td> 
                   {% endfor %}
               {% endfor %}
               </tr>
             </tr>
             
           </table>
+          <br>
+        -->
+          <table>
+            <tr>
+              <th>id</th>
+              <th>제목</th>
+             <!-- <th>내용</th> -->
+              <th>작성자</th>
+              <th>날짜</th>
+            </tr>
+            <tbody>
+              
+             
+              {% for row in data %}
+              <tr>   
+                <td>{{row[0]}}</td>
+                <td>
+                  <form method="post" action="/context/"> 
+                  <!-- <a href="http://127.0.0.1:5000/context/">{{row[1]}}</a> -->
+                  <input type="hidden" name="ctx" value={{row[2]}}>
+                  <input type="hidden" name="title" value={{row[1]}}>
+                  <input type="hidden" name="id" value={{row[3]}}>
+                  <input type="submit" value="{{row[1]}}">
+                  </form>
+                </td>
+              <!-- <td> <a href="http://127.0.0.1:5000/login/">{{row[2]}}</a> </td> --> 
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+              </tr>   
+              {% endfor %}
+            
+            </tbody>
+          </table>
 
-          <a href="http://127.0.0.1:5000/login/">로그인</a>
-          <a href="http://127.0.0.1:5000/g_write/">글쓰기</a>
-          <a href="http://127.0.0.1:5000/logout/">로그아웃</a>
+          
+                
+          <p><a href="http://127.0.0.1:5000/login/">로그인</a> </p>
+          <p><a href="http://127.0.0.1:5000/g_write/">글쓰기</a> </p>
+          <p><a href="http://127.0.0.1:5000/logout/">로그아웃</a> </p>
     </body>
 </html>

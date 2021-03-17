@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request,session,redirect,url_for
+from forms import RegistrationForm
+
 app = Flask(__name__)
 app.secret_key=b'1234'
 
@@ -8,6 +10,13 @@ import mysql.connector
 dbconfig={'host':'localhost','user':'root','password':'','database':'guestbook_db'}
 conn=mysql.connector.connect(**dbconfig)
 cursor=conn.cursor()
+
+@app.route('/register_test/',methods=["GET","POST"])
+def register_test():
+    form=RegistrationForm()
+    if form.validate_on_submit():
+        return redirect(url_for('home'))
+    return render_template("register_test.html",form=form)
 
 @app.route('/')
 def home()->'html':
@@ -44,6 +53,26 @@ def gesipan_login_db()->'html':
             print(session)
             return redirect("http://127.0.0.1:5000/")
 
+@app.route('/context/',methods=['POST'])
+def show()->'html':
+    ctx=request.form["ctx"]
+    title=request.form["title"]
+    cid=request.form["id"]
+    
+    return render_template("context.html",ctx=ctx,t=title,id=cid)
+
+@app.route('/delete/',methods=['POST'])
+def delete()->'html':
+        
+        d_t=request.form["title"]
+        d_id=request.form["id"]
+       
+        SQL="DELETE FROM guestbook_t WHERE c_writer=%s AND c_title=%s "
+        cursor.execute(SQL,(d_id,d_t))
+        conn.commit()    
+        print("delete success")
+        return render_template("delete.html",t=d_t,id=d_id)
+
 @app.route('/g_write/')
 def write()->'html':
     return render_template("g_write.html")
@@ -55,7 +84,7 @@ def writedb()->'html':
     desc=request.form["desc"]
 
     SQL="INSERT INTO guestbook_t (c_title,c_body,c_writer) VALUES (%s, %s, %s) "
-    cursor.execute(SQL,(title,author,desc))
+    cursor.execute(SQL,(title,desc,author))
     conn.commit()
     return render_template("g_write_result.html")
 
